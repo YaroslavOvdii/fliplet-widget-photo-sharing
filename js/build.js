@@ -125,6 +125,13 @@ $('[data-photo-sharing-id]').each(function(){
         // When click the camera button
         $(".add-photo").click(function() {
           // @TODO: GA Track event
+          if (Fliplet.Env.get('platform') === 'web') {
+            Fliplet.Navigate.popup({
+              popupTitle: 'Not yet available on web',
+              popupMessage: 'This feature only works on your mobile device.'
+            });
+            return;
+          }
 
           // Get the template
           var source = $(".photo_feed_upload").html();
