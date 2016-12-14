@@ -7,6 +7,8 @@ var index;
 var currentID;
 var currentevent;
 var blob;
+var imgwidth;
+var imgheight;
 // PhoneGap is ready
 function onDeviceReady() {
 	index = 0;
@@ -118,8 +120,8 @@ function uploadPhoto(imageURI) {
 
 	img.onload = function() {
 
-		var imgwidth = img.width;
-		var imgheight = img.height;
+		imgwidth = img.width;
+		imgheight = img.height;
 
 		if (imgwidth > imgheight) {
 			if (imgwidth > width) {
@@ -147,17 +149,8 @@ function uploadPhoto(imageURI) {
       return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
     }
 
-    var blob = dataURItoBlob(newimage);
-
-		//$thumbnails.append("<img id='thumbnailTSW' src='"+ newimage +"'data-index='"+index +"' />");
-		//$thumbnails.find("img").last().click(function () {
-		//THE LINE BELOW MUST BE ENABLED WHEN MULTIPLE UPLOADS ARE ENABLED
-		//images[currentID][$(this).data("index")].selected = !images[currentID][$(this).data("index")].selected;
-		//});
-		//index++;
-		//images[currentID][images[currentID].length - 1].base64thumb = newimage.split(",")[1];
+    blob = dataURItoBlob(newimage);
 		images[currentID].base64thumb = newimage.split(",")[1];
-
 
 		var event = new CustomEvent(
 			"thumbCanvasReady",
