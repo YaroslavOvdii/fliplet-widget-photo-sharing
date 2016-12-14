@@ -1,1 +1,1 @@
-# fliplet-widget-photo-sharing
+# Photo Sharing widget

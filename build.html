@@ -1,0 +1,114 @@
+<div data-photo-sharing-id="{{id}}" class="photo-feed-parent-holder">
+  <div class="photo-sharing-loading-holder">
+    <div class="loading-message">We’re loading the photo feed.<br>This will take just a moment.</div>
+    <div class="error-message">
+      <p>We were unable to get the photo feed.<br>Please check your internet connection.</p>
+      <div class="btn btn-primary refresh">
+        <span class="pull-text">Refresh</span> <span class="fa fa-refresh"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="photo-sharing-wrapper">
+    <div class="add-photo">
+      <span class="fa fa-plus"></span>
+    </div>
+    <div class="offline-warning animated">
+      <p>Your device is offline</p>
+    </div>
+
+    <div class="btn btn-primary refresh">
+      <span class="pull-text">Refresh</span> <span class="fa fa-refresh"></span>
+    </div>
+    <div class="stream-wrapper">
+
+    </div>
+    <!-- THIS BUTTON SHOULD ONLY APPEAR WHEN THERE IS MORE TO LOAD (MAX 20 PER LOAD) -->
+    <div class="btn btn-default load-more">
+      <span class="load-text">Load more</span> <span class="fa fa-repeat"></span>
+    </div>
+    <p class="reach-end">You've reached the end</p>
+    <p class="empty-feed-msg">Be the first to upload a photo</p>
+  </div>
+</div>
+
+<script class="photo_feed_image" type="text/template">
+  \{{#each this}}
+  <div class="image-wrapper">
+    <div class="image-container">
+      <span class="link-action-image_zoom link-has-image"><img src="\{{url}}" /></span>
+    </div>
+    <div class="info-wrapper">
+      <div class="clearfix">
+        <div class="pull-right">
+          <a href="mailto:{{#if reportEmail}}{{reportEmail}}{{else}}support@fliplet.com{{/if}}" class="btn btn-link report-photo">Report photo</a>
+        </div>
+        <p><strong>\{{name}}</strong> <small>\{{date}}</small></p>
+      </div>
+      <p><i>\{{caption}}</i></p>
+    </div>
+  </div>
+  \{{/each}}
+</script>
+
+<script class="photo_feed_upload" type="text/template">
+  <form class="form-horizontal animated">
+    <div class="form-holder">
+      <div class="disable-screen"></div>
+      <div class="form-group clearfix">
+        <div class="canvas-wrapper">
+          <div class="photoUpload">
+            <div class="placeholder-wrapper">
+              <img src="/img/image-placeholder.png" >
+              <span class="upload-new">Tap to upload a photo</span>
+              <span class="change-photo">Tap to change photo</span>
+            </div>
+            <input type="file" name="imageURL" class="image_file input-file selectimage">
+          </div>
+          <div class="canvas_image_file">
+            <canvas class="photo-upload"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="form-group clearfix">
+        <label class="control-label col-sm-12">Add a caption <small class="small-text">144 characters</small></label>
+        <div class="col-sm-12">
+          <input name="Caption" class="user_caption form-control" maxlength="144">
+        </div>
+      </div>
+      <div class="form-group clearfix">
+        <label class="control-label col-sm-12">Your name</label>
+        <div class="col-sm-12">
+          <input name="Name" type="text" class="user_name form-control" maxlength="144">
+        </div>
+      </div>
+    </div>
+    <hr class="hr-normal">
+    <div class="form-btn-wrapper clearfix">
+      <p class="offline-notification">You are offline. Check your connection to upload a photo</p>
+      <p class="image-missing">Please choose a photo before uploading.</p>
+      <p class="name-missing">Please enter your name before uploading.</p>
+      <button type="button" class="btn btn-primary upload-button">Upload photo</button>
+    </div>
+  </form>
+  <div class="success-screen animated">
+    <div class="message-wrapper">
+      <div class="success-icon"></div>
+      <p>Your photo was successfully uploaded.</p>
+    </div>
+    <div class="btn-wrapper">
+      <button type="button" class="btn btn-primary upload-another-button">Upload another</button>
+      <button type="button" class="btn btn-default back-feed">Back to all photos</button>
+    </div>
+  </div>
+  <div class="fail-screen animated">
+    <div class="message-wrapper">
+      <div class="fail-icon"></div>
+      <p>Something went wrong and we couldn’t upload your photo.</p>
+    </div>
+    <div class="btn-wrapper">
+      <button type="button" class="btn btn-primary try-again-button">Try again</button>
+      <button type="button" class="btn btn-default ui-button cancel-upload-button">Cancel</button>
+    </div>
+  </div>
+</script>

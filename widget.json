@@ -1,0 +1,38 @@
+{
+  "name": "Photo Sharing",
+  "package": "com.fliplet.photo-sharing",
+  "version": "1.0.0",
+  "icon": "img/icon.png",
+  "tags": ["type:component", "category:feeds"],
+  "provider_only": false,
+  "interface": {
+    "dependencies": [
+      "fliplet-core",
+      "fliplet-datasources",
+      "fliplet-studio-ui"
+    ],
+    "assets": [
+      "js/interface.js",
+      "css/interface.css"
+    ]
+  },
+  "build": {
+    "dependencies": [
+      "bootstrap",
+      "fliplet-core",
+      "fliplet-security",
+      "fliplet-datasources",
+      "handlebars",
+      "font-awesome",
+      "animate-css",
+      "moment"
+    ],
+    "assets": [
+      "vendor/overlay.js",
+      "vendor/imageUpload.js",
+      "js/build.js",
+      "vendor/overlay.css",
+      "css/build.css"
+    ]
+  }
+}

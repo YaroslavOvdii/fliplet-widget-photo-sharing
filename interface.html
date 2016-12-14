@@ -1,0 +1,31 @@
+<div>
+  <form class="form-horizontal">
+    <header>
+      <p>Configure your photo sharing feed</p>
+      <a id="help_tip" href="#">Need help?</a>
+    </header>
+
+    <div class="form-group clearfix">
+      <div class="col-sm-4 control-label">
+        <label>Which data source should photos be saved to?</label>
+      </div>
+      <div class="col-sm-8">
+        <select name="dataSource" class="form-control" required>
+          <option value="">-- Select data source --</option>
+        </select>
+        <small>or just <a href="#" data-create-source>create a new data source</a></small>
+      </div>
+    </div>
+
+    <div class="form-group clearfix">
+      <div class="col-sm-4 control-label">
+        <label for="primaryButtonLabel">Photo reports will be sent to...</label>
+      </div>
+      <div class="col-sm-8">
+        <input type="email" name="name" class="form-control" id="report_email" placeholder="Enter email address" value="{{#if reportEmail}}{{reportEmail}}{{/if}}" required />
+        <p class="help-block">If no email address is specified, an email will be sent to support@fliplet.com</p>
+      </div>
+    </div>
+
+  </form>
+</div>
