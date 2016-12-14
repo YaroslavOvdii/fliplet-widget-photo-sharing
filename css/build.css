@@ -154,7 +154,7 @@ a {
 	background-color: #428bca;
 	color: #FFF;
 	z-index: 2;
-	top: 56px;
+	bottom: 50px;
 	text-align: center;
 	padding: 6px 0 0;
 }
@@ -286,6 +286,10 @@ a {
 	}
 }
 @media (min-width: 640px) {
+	.offline-warning {
+		bottom: 60px;
+	}
+
 	.photo-feed-parent-holder {
 		padding: 15px 12.5%;
 	}
