@@ -461,35 +461,7 @@ $('[data-photo-sharing-id]').each(function(){
         }
 
         $loadMore.removeClass('loading').html('Load more <span class="fa fa-repeat"></span>');
-      },
-
-      /**
-       * Check if a PV from a form exists and have data on the field.
-       * If it have then prefill the name field on the upload form
-       */
-      getNameFromForm: function() {
-        var that = this;
-
-        if (that.config.feed_settings.form_name === "" && that.config.feed_settings.field_name === "") {
-          return;
-        }
-
-        var form = JSON.parse(that.config.feed_settings.form_name);
-        // PV key where the form data should be saved if the form was already submitted
-        var key = document.body.dataset.applicationId + '_' + form.page_id + '_' + form.tracking_widget_nesting_path.join();
-
-        // PV with the unique key for the form
-        new PV(key, {}, function(data) {
-            if (!jQuery.isEmptyObject(data)) {
-              if (data.formData !== "undefined") {
-                $('.user_name').val(data.formData[that.config.feed_settings.field_name]);
-              }
-            }
-          },
-          function() {}
-        );
       }
-
     };
 
     // return module
