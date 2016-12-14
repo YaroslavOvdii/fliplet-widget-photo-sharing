@@ -434,7 +434,8 @@ $('[data-photo-sharing-id]').each(function(){
             name: submissions[i].data.Name,
             caption: submissions[i].data.Caption,
             width: submissions[i].data.imageWidth,
-            height: submissions[i].data.imageHeight
+            height: submissions[i].data.imageHeight,
+            appName: Fliplet.Env.get('appName')
           };
           images.push(image);
 

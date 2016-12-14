@@ -41,7 +41,7 @@
     <div class="info-wrapper">
       <div class="clearfix">
         <div class="pull-right">
-          <a href="mailto:{{#if reportEmail}}{{reportEmail}}{{else}}support@fliplet.com{{/if}}" class="btn btn-link report-photo">Report photo</a>
+          <a href="mailto:{{#if reportEmail}}{{reportEmail}}{{else}}support@fliplet.com{{/if}}?subject=Report photo&body=I%20would%20like%20to%20report%20the%20photo%20with%20the%20following%20information%3A%0D%0A%0D%0AApp%20Name%3A%20\{{appName}}%0APhoto%20Link%3A%20\{{encodedURL}}" class="btn btn-link report-photo">Report photo</a>
         </div>
         <p><strong>\{{name}}</strong> <small>\{{date}}</small></p>
       </div>
