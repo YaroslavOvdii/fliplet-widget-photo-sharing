@@ -545,14 +545,18 @@ input.form-control {
 	width: 100px;
 	height: 100px;
 	margin: 0 auto 15px;
-	background: url("../img/success.png");
+	font-size: 100px;
+	line-height: 100px;
+	color: #23a437;
 }
 
 .fail-screen .message-wrapper .fail-icon {
 	width: 100px;
 	height: 100px;
 	margin: 0 auto 15px;
-	background: url("../img/fail.png");
+	font-size: 100px;
+	line-height: 100px;
+	color: #e03629;
 }
 
 .refresh.refreshing .fa-refresh,
