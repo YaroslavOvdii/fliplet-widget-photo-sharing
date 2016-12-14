@@ -270,7 +270,7 @@ $('[data-photo-sharing-id]').each(function(){
 
         // Check for errors
         var error = false;
-        if ((typeof images === "undefined" || !images.hasOwnProperty("image_file") || !images.image_file.hasOwnProperty("base64"))) {
+        if (!blob) {
           _this.showMissingPhoto();
           error = true;
         }
@@ -307,19 +307,10 @@ $('[data-photo-sharing-id]').each(function(){
 
           formData = new FormData();
 
-          fileNames.forEach(function (fileName) {
-            var fieldFiles = files[fileName];
-            var file;
-
-            for (var i = 0; i < fieldFiles.length; i++) {
-              file = fieldFiles.item(i);
-              formData.append(fileName, file);
-            }
-          });
-
           Object.keys(fields).forEach(function (fieldName) {
             formData.append(fieldName, fields[fieldName]);
           });
+          formData.append('image', blob);
         }
 
         formData = formData || fields;
@@ -334,7 +325,7 @@ $('[data-photo-sharing-id]').each(function(){
           $(".photo-upload").parent().html("<canvas class='photo-upload'></canvas>");
 
           // Delete the image from images
-          images = {};
+          blob = null;
 
           // Show success screen
           $('.success-screen').addClass('show zoomIn');

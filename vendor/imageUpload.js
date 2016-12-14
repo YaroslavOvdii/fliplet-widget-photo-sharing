@@ -6,6 +6,7 @@ var images = {};
 var index;
 var currentID;
 var currentevent;
+var blob;
 // PhoneGap is ready
 function onDeviceReady() {
 	index = 0;
@@ -24,9 +25,8 @@ function onDeviceReady() {
 	});
 
 	$(".selectimage").click(function (event) {
-		console.log(event);
 		event.preventDefault();
-		currentID = event.target.id;
+		currentID = event.target.name;
 		var boundingRect = this.parentNode.getBoundingClientRect();
 
 		var onConfirm = function(buttonIndex) {
@@ -51,9 +51,7 @@ function onDeviceReady() {
 			'Choose Image',
 			buttonLabels
 		);
-
 	});
-
 }
 
 function getPicture(source,boundingRect) {
@@ -99,7 +97,7 @@ function getPicture(source,boundingRect) {
 }
 
 function uploadPhoto(imageURI) {
-
+	console.log(imageURI);
 	if( typeof images[currentID] == "undefined") {
 		images[currentID] = [];
 	}
@@ -108,8 +106,7 @@ function uploadPhoto(imageURI) {
 		selected : true,
 	};
 
-	$thumbnails = $(".canvas_"+currentID);
-	$canvas = $(".canvas_"+currentID+" canvas");
+	$canvas = $("canvas");
 	var imgsrc = "data:image/jpeg;base64," +imageURI;
 	var width = 800;
 	var height = 800;
@@ -141,6 +138,17 @@ function uploadPhoto(imageURI) {
  		context.drawImage(this, drawx, drawy, imgwidth, imgheight);
 		newimage = $canvas[0].toDataURL("image/jpeg");
 
+    function dataURItoBlob(dataURI) {
+      var binary = atob(dataURI.split(',')[1]);
+      var array = [];
+      for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+      }
+      return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+    }
+
+    var blob = dataURItoBlob(newimage);
+
 		//$thumbnails.append("<img id='thumbnailTSW' src='"+ newimage +"'data-index='"+index +"' />");
 		//$thumbnails.find("img").last().click(function () {
 		//THE LINE BELOW MUST BE ENABLED WHEN MULTIPLE UPLOADS ARE ENABLED
@@ -149,6 +157,7 @@ function uploadPhoto(imageURI) {
 		//index++;
 		//images[currentID][images[currentID].length - 1].base64thumb = newimage.split(",")[1];
 		images[currentID].base64thumb = newimage.split(",")[1];
+
 
 		var event = new CustomEvent(
 			"thumbCanvasReady",
