@@ -30,6 +30,10 @@ header a {
     text-decoration: none;
 }
 
+.title-header p {
+    color: #14505e;
+}
+
 .form-group {
     margin-left: -15px;
     margin-right: -15px;
@@ -64,4 +68,215 @@ label {
 .text-helper {
     margin-top: 0.5em;
     font-size: 0.8em;
+}
+/* FOLDER SELECTION */
+.gallery-tool {
+    font-size: 1em;
+    border-bottom: 1px solid #E3E9EB;
+    margin-bottom: 1rem;
+    padding-bottom: 1em;
+    line-height: 44px;
+}
+
+.gallery-tool .back-btn {
+    padding: 0 16px 0 14px;
+    position: relative;
+    cursor: pointer;
+    float: right;
+    display: inline-block;
+}
+
+.gallery-tool .back-btn:hover {
+    text-decoration: underline;
+}
+
+.gallery-tool .back-btn:before {
+    content: "\f148";
+    font: normal normal normal 16px FontAwesome;
+    position: absolute;
+    right: 0;
+    width: 10px;
+    height: 44px;
+    line-height: 44px;
+}
+
+.breadcrumbs-select {
+    width: 50%;
+    display: inline-block;
+}
+
+.breadcrumbs-select > div.helper {
+    line-height: 44px;
+    margin-right: 10px;
+}
+
+.image-library {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: wrap;
+}
+
+.image-library .nofiles-msg {
+    text-align: center;
+    width: 100%;
+}
+
+.image-library .nofiles-msg label {
+    cursor: pointer;
+}
+
+.image-library .col-xs-4 {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.image-holder {
+    position: relative;
+    width: 100%;
+    padding-top: 59%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    border: 1px solid #d9ddde;
+    background-color: #FFFFFF;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+    overflow: hidden;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-overlay::after,
+.image-overlay::before {
+    content: '';
+    width: 100%;
+    order: 1;
+}
+
+.image-holder:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay .btn {
+    opacity: 0;
+    line-height: 28px;
+    font-size: 0.8em;
+    border-radius: 4px;
+}
+
+.image-overlay .btn:nth-child(1) {
+    order: 1;
+}
+
+.image-overlay .btn:nth-child(2) {
+    order: 2;
+}
+
+.image-overlay .line-break {
+    width: 100%;
+}
+
+.image-holder:hover .image-overlay .btn {
+    opacity: 1;
+}
+
+.image-info {
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: 100%;
+    background-color: #FFF;
+    border: 1px solid #d9ddde;
+    padding: 9px 10px 10px;
+    margin-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.225s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    z-index: 10;
+    word-break: break-word;
+}
+
+.image-info,
+.image-title {
+    font-size: 12px;
+}
+
+.image-info p {
+    margin-bottom: 5px;
+}
+
+.image-info p + p {
+    font-size: 10px;
+    margin: 0;
+}
+
+.image-holder:hover > .image-info {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-title {
+    padding: 9px 11px;
+    word-break: break-word;
+}
+
+.image-title p {
+    margin: 0;
+}
+
+.folder-selection {
+    text-align: left;
+    margin-bottom: 2rem;
+    padding-right: 10px;
+}
+
+.folder-selection span.active {
+    color: #00abd2;
+    font-weight: 600;
+}
+
+.image-overlay .fa {
+    order: 1;
+    font-size: 10vmin;
+    color: #ccc;
+}
+
+.folder.selected .image-overlay .fa {
+    color: #00abd2;
+}
+
+.folder.selected .image-holder,
+.image.selected .image-holder {
+    border-color: #00abd2;
+}
+
+.image-library .folder,
+.image-library .image {
+    cursor: pointer;
+}
+
+.image-library .folder .image-info {
+    cursor: default;
+}
+
+.image-library .folder .image-overlay {
+    opacity: 1;
+}
+
+.file-manager-controls {
+    text-align: center;
+    padding-bottom: 1.5em;
 }

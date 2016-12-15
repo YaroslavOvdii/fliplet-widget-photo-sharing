@@ -9,7 +9,11 @@
     "dependencies": [
       "fliplet-core",
       "fliplet-datasources",
-      "fliplet-studio-ui"
+      "fliplet-media",
+      "fliplet-studio-ui",
+      "handlebars",
+      "bootstrap",
+      "lodash"
     ],
     "assets": [
       "js/interface.js",

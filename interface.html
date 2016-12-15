@@ -7,7 +7,7 @@
 
     <div class="form-group clearfix">
       <div class="col-sm-4 control-label">
-        <label>Which data source should photos be saved to?</label>
+        <label>Which data source should photo entries be saved to?</label>
       </div>
       <div class="col-sm-8">
         <select name="dataSource" class="form-control" required>
@@ -27,5 +27,97 @@
       </div>
     </div>
 
+    <div class="title-header">
+      <p>Select the folder where the photos are stored.</p>
+    </div>
+
+    <div class="gallery-tool clearfix">
+      <div class="breadcrumbs-select">
+        <div class="helper"><strong>Root</strong></div>
+      </div>
+      <div class="back-btn">
+          Up to <span class="up-to">Folder Name</span>
+      </div>
+    </div>
+    <div class="folder-selection">
+        <span>Select a folder below</span>
+    </div>
+    <div class="image-library"></div>
+
   </form>
 </div>
+<!-- Templates -->
+<script id="template-folder" type="text/template">
+    <div class="col-xs-4 item-holder folder" data-folder-id="\{{id}}" data-parent-id="\{{parentId}}" }>
+        <div class="image-holder">
+            <div class="image-overlay">
+                <i class="fa fa-folder" aria-hidden="true"></i>
+            </div>
+            <div class="image-info">
+                <p>
+                    <strong>\{{name}}</strong>
+                </p>
+                <p>
+                    Double click to open the folder
+                </p>
+            </div>
+        </div>
+        <div class="image-title">
+            <p>
+                <strong>\{{name}}</strong>
+            </p>
+        </div>
+    </div>
+</script>
+
+<script id="template-app" type="text/template">
+    <div class="col-xs-4 item-holder folder" data-app-id="\{{id}}">
+        <div class="image-holder">
+            <div class="image-overlay">
+                <i class="fa fa-folder" aria-hidden="true"></i>
+            </div>
+            <div class="image-info">
+                <p>
+                    <strong>\{{name}}</strong>
+                </p>
+                <p>
+                    Double click to open the folder
+                </p>
+            </div>
+        </div>
+        <div class="image-title">
+            <p>
+                <strong>\{{name}}</strong>
+            </p>
+        </div>
+    </div>
+</script>
+
+<script id="template-organization" type="text/template">
+    <div class="col-xs-4 item-holder folder" data-organization-id="\{{id}}">
+        <div class="image-holder">
+            <div class="image-overlay">
+                <i class="fa fa-folder" aria-hidden="true"></i>
+            </div>
+            <div class="image-info">
+                <p>
+                    <strong>\{{name}}</strong>
+                </p>
+                <p>
+                    Double click to open the folder
+                </p>
+            </div>
+        </div>
+        <div class="image-title">
+            <p>
+                <strong>\{{name}}</strong>
+            </p>
+        </div>
+    </div>
+</script>
+
+<script id="template-nofiles" type="text/template">
+    <div class="nofiles-msg">
+        <p>This folder is empty.</p>
+    </div>
+</script>
