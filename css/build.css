@@ -241,13 +241,10 @@ a {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.1);
-	-webkit-mask-image: url('../img/image-placeholder-2.png');
-	-webkit-mask-repeat: no-repeat;
-	-webkit-mask-position: center center;
-	mask-image: url('../img/image-placeholder-2.png');
-	mask-repeat: no-repeat;
-	mask-position: center center;
+	background-color: transparent;
+	background-image: url('../img/image-placeholder-2.png');
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 .image-container span.link-action-image_zoom {

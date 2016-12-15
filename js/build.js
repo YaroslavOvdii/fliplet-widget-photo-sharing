@@ -305,7 +305,7 @@ $('[data-photo-sharing-id]').each(function(){
           Object.keys(fields).forEach(function (fieldName) {
             formData.append(fieldName, fields[fieldName]);
           });
-          formData.append('image', blob);
+          formData.append('imageURL', blob);
         }
 
         formData.append('imageWidth', imgwidth);
@@ -359,6 +359,8 @@ $('[data-photo-sharing-id]').each(function(){
 
               if (window.feedImages.length === 0) {
                 $('.empty-feed-msg').show();
+              } else if ( window.feedImages.length > 0 ) {
+                $('.empty-feed-msg').hide();
               }
 
               // Show/hide messages and buttons
