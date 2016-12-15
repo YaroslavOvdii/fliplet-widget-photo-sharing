@@ -310,6 +310,7 @@ $('[data-photo-sharing-id]').each(function(){
 
         formData.append('imageWidth', imgwidth);
         formData.append('imageHeight', imgheight);
+        formData.append('uploadedAt', Date.now());
         formData = formData || fields;
 
         _this.getConnection().then(function (connection) {
