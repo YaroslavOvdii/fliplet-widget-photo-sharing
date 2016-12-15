@@ -112,7 +112,7 @@ $('[data-photo-sharing-id]').each(function(){
         $('.back-feed').add('.cancel-upload-button').on('click', function() {
           _this.refresh();
           _this.overlay.close();
-          $(".viewport-content").animate({ scrollTop: 0 }, 250);
+          $(".photo-feed-parent-holder").animate({ scrollTop: 0 }, 250);
         });
 
         // If we have the missing photo message hide it when we select an image
@@ -185,9 +185,6 @@ $('[data-photo-sharing-id]').each(function(){
       moveElements: function() {
         // Selectors
         var $cameraButton = $('.add-photo');
-        var $body = $('body');
-        var $viewport = $('.viewport');
-        var $viewportContent = $('.viewport-content');
         var $offlineMessage = $('.offline-warning');
         var $emptyFeedmsg = $('.empty-feed-msg');
 
@@ -196,27 +193,18 @@ $('[data-photo-sharing-id]').each(function(){
           $('.add-photo').addClass('ready');
         }, 500);
 
-        // Move offline message - Position fixed fix
-        $body.prepend($offlineMessage);
-
-        if ($viewport.width() < 640) {
-          $offlineMessage.css('top', '44px');
-        }
-
-        // Move Empty Feed Message
-        $viewportContent.prepend($emptyFeedmsg);
       },
       // Show the offline message
       showOfflineMessage: function() {
         var $offlineWarning = $('.offline-warning');
-        if ($offlineWarning.hasClass('fadeOutUp')) {
+        if ($offlineWarning.hasClass('fadeOutDown')) {
           if ($offlineWarning.hasClass('show')) {
-            $offlineWarning.removeClass('fadeOutUp show fadeInDown').addClass('show fadeInDown');
+            $offlineWarning.removeClass('fadeOutDown show fadeInUp').addClass('show fadeInUp');
           } else {
-            $offlineWarning.removeClass('fadeOutUp').addClass('show fadeInDown');
+            $offlineWarning.removeClass('fadeOutDown').addClass('show fadeInUp');
           }
         } else {
-          $offlineWarning.addClass('show fadeInDown');
+          $offlineWarning.addClass('show fadeInUp');
         }
       },
 
@@ -356,7 +344,7 @@ $('[data-photo-sharing-id]').each(function(){
           _this.getConnection().then(function (connection) {
             return connection.find();
           }).then(function (rows) {
-            if (rows.length > 0) {
+            if (rows.length >= 0) {
               _this.removeOfflineMessage();
               // Get the images
               window.feedImages = _this.processImageFeed(rows);
@@ -379,9 +367,6 @@ $('[data-photo-sharing-id]').each(function(){
               }
 
               $('.refresh').show();
-              setTimeout(function() {
-                $('.content-main').css('overflow', 'scroll');
-              }, 500);
 
               var $loadingMessageHolder = $('.photo-sharing-loading-holder');
               if ($loadingMessageHolder.hasClass('failed')) {
@@ -408,7 +393,14 @@ $('[data-photo-sharing-id]').each(function(){
                 $('.reach-end').show();
               }
             } else {
-              navigator.notification.alert("SOME ERROR TEXT HERE", function() {}, 'Error', 'Close');
+              if (Fliplet.Env.get('platform') === 'web') {
+                Fliplet.Navigate.popup({
+                  popupTitle: 'Data Source Error',
+                  popupMessage: 'It seems there is an issue with your data source. Please contact support if the problem persists.'
+                });
+                return;
+              }
+              navigator.notification.alert("It seems there is an issue with your data source. Please contact support if the problem persists.", function() {}, 'Data Source Error', 'Close');
             }
           });
 

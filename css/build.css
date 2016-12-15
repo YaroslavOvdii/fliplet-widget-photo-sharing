@@ -1,5 +1,10 @@
 /* Buttons */
+html {
+	height: 100%;
+}
+
 body {
+	height: 100%;
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -74,6 +79,7 @@ body {
 	outline: none;
 }
 @media (min-width:640px) {
+	.btn-default,
 	.btn-primary,
 	.btn-secondary {
 		clear: none;
@@ -89,7 +95,8 @@ a {
 }
 /* Photo Sharing */
 .photo-feed-parent-holder {
-	padding: 15px 0;
+	height: 100%;
+	position: relative;
 }
 
 .photo-sharing-loading-holder {
@@ -115,15 +122,8 @@ a {
 }
 
 .photo-sharing-wrapper {
-	position: relative;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	width: 100%;
 	text-align: center;
-	padding-bottom: 34px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding: 20px 15px 50px;
 	display: none;
 }
 
@@ -294,14 +294,8 @@ a {
 		bottom: 60px;
 	}
 
-	.photo-feed-parent-holder {
-		padding: 15px 12.5%;
-	}
-
 	.photo-sharing-wrapper {
-		padding-left: 0;
-		padding-right: 0;
-		padding-bottom: 44px;
+		padding: 20px 0 60px;
 	}
 
 	.overlay.photo-upload-overlay .overlayPanel {
@@ -325,6 +319,8 @@ a {
 	.stream-wrapper {
 		margin-left: 0;
 		margin-right: 0;
+		padding-left: 12.5%;
+		padding-right: 12.5%;
 	}
 
 	.image-wrapper {
