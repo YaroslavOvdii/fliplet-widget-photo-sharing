@@ -314,7 +314,7 @@ $('[data-photo-sharing-id]').each(function(){
         formData = formData || fields;
 
         _this.getConnection().then(function (connection) {
-          return connection.insert(formData);
+          return connection.insert(formData, data.folder);
         }).then(function onSaved() {
           // Hide form
           $('form.form-horizontal').addClass('hidden');

@@ -196,12 +196,10 @@ $('.image-library')
 
     if ($el.hasClass('selected')) {
       $('.folder-selection span').html('Select a folder below');
-      // @TODO: Clean folder config 
-      //_this.folderConfig = {};
+      data.folder = {};
     } else {
       $('.folder-selection span').html('You have selected a folder');
-      // @TODO: Add folder ID to folder config
-      //_this.folderConfig = { folderId: $el.data('folder-id') };
+      data.folder = { folderId: $el.data('folder-id') };
     }
 
     $el.toggleClass('selected');
@@ -215,12 +213,10 @@ $('.image-library')
 
     if ($el.hasClass('selected')) {
       $('.folder-selection span').html('Select a folder below');
-      // @TODO: Clean folder config
-      //_this.folderConfig = {};
+      data.folder = {};
     } else {
       $('.folder-selection span').html('You have selected a folder');
-      // @TODO: Add app ID to folder config
-      //_this.folderConfig = { appId: $el.data('app-id') };
+      data.folder = { appId: $el.data('app-id') };
     }
 
     $el.toggleClass('selected');
@@ -234,12 +230,10 @@ $('.image-library')
 
     if ($el.hasClass('selected')) {
       $('.folder-selection span').html('Select a folder below');
-      // @TODO: Clean folder config
-      //_this.folderConfig = {};
+      data.folder = {};
     } else {
       $('.folder-selection span').html('You have selected a folder');
-      // @TODO: Add org ID to folder config
-      //_this.folderConfig = { organizationId: $el.data('organization-id') };
+      data.folder = { organizationId: $el.data('organization-id') };
     }
 
     $el.toggleClass('selected');
