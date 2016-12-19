@@ -414,6 +414,11 @@ $('[data-photo-sharing-id]').each(function(){
         var submissionUrl = '';
         var submissionDate;
 
+        // Sort by uploadedAt
+        submissions = submissions.sort(function(a,b) {
+          return moment(a.data.uploadedAt) - moment(b.data.uploadedAt);
+        });
+
         for (var i = 0, l = submissions.length; i < l; i++) {
           submissionUrl = submissions[i].data.imageURL;
           submissionDate = submissions[i].data.uploadedAt;
@@ -430,6 +435,7 @@ $('[data-photo-sharing-id]').each(function(){
           images.push(image);
 
         }
+
         return images;
       },
       /**
