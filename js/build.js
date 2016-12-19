@@ -74,8 +74,7 @@ $('[data-photo-sharing-id]').each(function(){
         $('.upload-another-button').on('click', function() {
           // RESET FORM STATUS
           $('.user_caption').val("");
-          $('button.upload').html('Upload photo');
-          $('.form-holder').removeClass('faded');
+          _this.removeUploadAnimation();
           $('.placeholder-wrapper').removeClass('has-image');
 
           // SHOW FORM
@@ -249,6 +248,12 @@ $('[data-photo-sharing-id]').each(function(){
         // DISABLE FORM FIRST & CHANGE BUTTON TEXT
         $('.upload-button').addClass('uploading').html('Uploading <span class="fa fa-repeat"></span>');
         $('.form-holder').addClass('faded');
+      },
+
+      removeUploadAnimation: function() {
+        // ENABLE FORM & CHANGE BUTTON TEXT
+        $('.upload-button').removeClass('uploading').html('Upload photo');
+        $('.form-holder').removeClass('faded');
       },
 
       // @TODO: Refactor upload
