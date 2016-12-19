@@ -305,7 +305,7 @@ $('[data-photo-sharing-id]').each(function(){
         formData.append('imageURL', imageBase64);
         formData.append('imageWidth', imgwidth);
         formData.append('imageHeight', imgheight);
-        formData.append('uploadedAt', moment().format('lll'));
+        formData.append('uploadedAt', moment().format());
         formData = formData || fields;
 
         _this.getConnection().then(function (connection) {
