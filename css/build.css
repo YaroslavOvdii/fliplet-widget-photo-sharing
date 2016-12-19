@@ -562,7 +562,7 @@ input.form-control {
 	animation: rotationLoop 1.5s linear infinite;
 }
 
-.form-btn-wrapper button.upload.uploading .fa-repeat {
+.form-btn-wrapper button.upload-button.uploading .fa-repeat {
 	margin-left: 5px;
 	-moz-animation: rotationLoop 1.5s linear infinite;
 	-ms-animation: rotationLoop 1.5s linear infinite;
