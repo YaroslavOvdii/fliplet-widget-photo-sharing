@@ -5,6 +5,7 @@
   "icon": "img/icon.png",
   "tags": ["type:component", "category:feeds"],
   "provider_only": false,
+  "html_tag": "span",
   "interface": {
     "dependencies": [
       "fliplet-core",
