@@ -1,3 +1,7 @@
+body {
+    background-color: transparent;
+}
+
 .fl-widget-provider {
     border: 0;
     width: 100%;

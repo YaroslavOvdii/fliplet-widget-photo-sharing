@@ -310,7 +310,7 @@ $('[data-photo-sharing-id]').each(function(){
 
         formData.append('imageWidth', imgwidth);
         formData.append('imageHeight', imgheight);
-        formData.append('uploadedAt', Date.now());
+        formData.append('uploadedAt', moment().format('lll'));
         formData = formData || fields;
 
         _this.getConnection().then(function (connection) {
@@ -417,7 +417,7 @@ $('[data-photo-sharing-id]').each(function(){
         var images = [];
         var image = {};
         var submissionUrl = '';
-        var submissionDate = '';
+        var submissionDate;
 
         for (var i = 0, l = submissions.length; i < l; i++) {
           submissionUrl = submissions[i].data.imageURL;
@@ -425,7 +425,7 @@ $('[data-photo-sharing-id]').each(function(){
           image = {
             url: submissionUrl,
             encodedURL: encodeURIComponent(submissionUrl),
-            date: moment.unix(submissionDate).fromNow(),
+            date: moment(submissionDate).fromNow(),
             name: submissions[i].data.Name,
             caption: submissions[i].data.Caption,
             width: submissions[i].data.imageWidth,
