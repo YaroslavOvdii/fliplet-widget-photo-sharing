@@ -265,7 +265,7 @@ $('[data-photo-sharing-id]').each(function(){
 
         // Check for errors
         var error = false;
-        if (!blob) {
+        if (!imageBase64) {
           _this.showMissingPhoto();
           error = true;
         }
@@ -294,20 +294,15 @@ $('[data-photo-sharing-id]').each(function(){
           }
         });
 
-        var fileNames = Object.keys(files);
-        if (fileNames.length) {
-          if (!Fliplet.Navigator.isOnline()) {
-            return alert('You must be connected to submit this form');
-          }
-
-          formData = new FormData();
-
-          Object.keys(fields).forEach(function (fieldName) {
-            formData.append(fieldName, fields[fieldName]);
-          });
-          formData.append('imageURL', blob);
+        if (!Fliplet.Navigator.isOnline()) {
+          return alert('You must be connected to submit this form');
         }
 
+        formData = new FormData();
+        Object.keys(fields).forEach(function (fieldName) {
+          formData.append(fieldName, fields[fieldName]);
+        });
+        formData.append('imageURL', imageBase64);
         formData.append('imageWidth', imgwidth);
         formData.append('imageHeight', imgheight);
         formData.append('uploadedAt', moment().format('lll'));
@@ -323,7 +318,7 @@ $('[data-photo-sharing-id]').each(function(){
           $(".photo-upload").parent().html("<canvas class='photo-upload'></canvas>");
 
           // Delete the image from images
-          blob = null;
+          imageBase64 = null;
 
           // Show success screen
           $('.success-screen').addClass('show zoomIn');

@@ -5,8 +5,7 @@ var destinationType; // sets the format of returned value
 var images = {};
 var index;
 var currentID;
-var currentevent;
-var blob;
+var imageBase64;
 var imgwidth;
 var imgheight;
 // PhoneGap is ready
@@ -105,7 +104,7 @@ function uploadPhoto(imageURI) {
 	}
 	images[currentID] = {
 		base64 : imageURI,
-		selected : true,
+		selected : true
 	};
 
 	$canvas = $("canvas");
@@ -119,7 +118,6 @@ function uploadPhoto(imageURI) {
 	var newimage = null;
 
 	img.onload = function() {
-
 		imgwidth = img.width;
 		imgheight = img.height;
 
@@ -138,13 +136,7 @@ function uploadPhoto(imageURI) {
 		var drawy = ((height - imgheight) > 0 ) ?  (height - imgheight)/2 : 0 ;
 
  		context.drawImage(this, drawx, drawy, imgwidth, imgheight);
-		newimage = $canvas[0].toDataURL("image/jpeg");
-
-    $canvas[0].toBlob(function(generatedBlob) {
-      blob = generatedBlob;
-    });
-
-		images[currentID].base64thumb = newimage.split(",")[1];
+    imageBase64 = imgsrc;
 
 		var event = new CustomEvent(
 			"thumbCanvasReady",
@@ -156,22 +148,4 @@ function uploadPhoto(imageURI) {
 		$canvas[0].dispatchEvent(event);
 	};
 	img.src = imgsrc;
-}
-
-// HTMLCanvasElement.toBlob() Polyfill
-if (!HTMLCanvasElement.prototype.toBlob) {
-  Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
-    value: function (callback, type, quality) {
-
-      var binStr = atob( this.toDataURL(type, quality).split(',')[1] ),
-        len = binStr.length,
-        arr = new Uint8Array(len);
-
-      for (var i=0; i<len; i++ ) {
-        arr[i] = binStr.charCodeAt(i);
-      }
-
-      callback( new Blob( [arr], {type: type || 'image/png'} ) );
-    }
-  });
 }
