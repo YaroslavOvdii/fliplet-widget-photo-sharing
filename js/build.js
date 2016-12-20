@@ -421,7 +421,7 @@ $('[data-photo-sharing-id]').each(function(){
 
         // Sort by uploadedAt
         submissions = submissions.sort(function(a,b) {
-          return moment(a.data.uploadedAt) - moment(b.data.uploadedAt);
+          return moment(b.data.uploadedAt) - moment(a.data.uploadedAt);
         });
 
         for (var i = 0, l = submissions.length; i < l; i++) {
