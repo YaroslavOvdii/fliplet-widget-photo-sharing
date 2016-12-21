@@ -161,6 +161,30 @@ $('[data-photo-sharing-id]').each(function(){
           _this.renderImageFeed();
         });
 
+        // First blink of camera icon
+        setTimeout(_this.bPhotoFeed, 5000);
+
+        document.addEventListener("offline", function(){
+          _this.showOfflineMessage();
+          _this.offlineOverlay();
+
+          $('.add-photo').removeClass('ready');
+        }, false);
+
+        document.addEventListener("online", function(){
+          _this.removeOfflineMessage();
+          _this.onlineOverlay();
+
+          $('.add-photo').addClass('ready');
+        }, false);
+
+      },
+      // THIS SHOULD ONLY RUN ONCE
+      bPhotoFeed: function() {
+        $('.add-photo').addClass('rubberBand');
+        setTimeout(function() {
+          $('.add-photo').removeClass('rubberBand');
+        }, 1000);
       },
       refresh: function() {
         if (Fliplet.Navigator.isOnline()) {
@@ -196,25 +220,17 @@ $('[data-photo-sharing-id]').each(function(){
       // Show the offline message
       showOfflineMessage: function() {
         var $offlineWarning = $('.offline-warning');
-        if ($offlineWarning.hasClass('fadeOutDown')) {
-          if ($offlineWarning.hasClass('show')) {
-            $offlineWarning.removeClass('fadeOutDown show fadeInUp').addClass('show fadeInUp');
-          } else {
-            $offlineWarning.removeClass('fadeOutDown').addClass('show fadeInUp');
-          }
-        } else {
-          $offlineWarning.addClass('show fadeInUp');
-        }
+        $offlineWarning.removeClass('fadeOutDown');
+        $offlineWarning.addClass('fadeInUp ready');
       },
 
       removeOfflineMessage: function() {
         var $offlineWarning = $('.offline-warning');
-        if ($offlineWarning.hasClass('show')) {
-          $offlineWarning.removeClass('fadeInDown').addClass('fadeOutUp');
-          setTimeout(function() {
-            $offlineWarning.removeClass('show');
-          }, 1000);
-        }
+        $offlineWarning.removeClass('fadeInUp');
+        $offlineWarning.addClass('fadeOutDown');
+        setTimeout(function() {
+          $offlineWarning.removeClass('ready');
+        }, 600);
       },
 
       offlineOverlay: function() {

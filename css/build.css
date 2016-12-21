@@ -124,7 +124,7 @@ a {
 
 .photo-sharing-wrapper {
 	text-align: center;
-	padding: 20px 15px 50px;
+	padding: 20px 15px 65px;
 	display: none;
 }
 
@@ -153,40 +153,46 @@ a {
 }
 
 .offline-warning {
-	display: none;
 	position: fixed;
 	width: 100%;
 	background-color: rgba(162,162,162,0.95);
 	color: #FFF;
-	z-index: 2;
-	bottom: 50px;
+	z-index: 1;
+	left: 0;
+	bottom: 0;
 	text-align: center;
 	padding: 6px 0 0;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.offline-warning.ready {
+	opacity: 1;
+	visibility: visible;
 }
 
 .add-photo {
-	background-color: #fbfbfb;
-	border-radius: 0;
-	border-top: 1px solid #a2a2a2;
-	width: 100%;
+	background-color: #428bca;
+	border-radius: 50%;
+	width: 50px;
 	height: 50px;
 	line-height: 50px;
 	text-align: center;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 	position: fixed;
 	z-index: 2;
-	right: 0;
+	right: 15px;
 	margin-right: 0;
 	bottom: -55px;
 	font-size: 22px;
-	color: #428bca;
+	color: #FFFFFF;
 	-webkit-transition: bottom 0.25s ease;
 	transition: bottom 0.25s ease;
 	cursor: pointer;
 }
 
 .add-photo.ready {
-	bottom: 0;
+	bottom: 15px;
 }
 
 .stream-wrapper {
@@ -203,7 +209,10 @@ a {
 }
 
 .load-more {
-	margin-bottom: 20px;
+	width: auto;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .refresh .pull-text {
@@ -288,12 +297,8 @@ a {
 	}
 }
 @media (min-width: 640px) {
-	.offline-warning {
-		bottom: 60px;
-	}
-
 	.photo-sharing-wrapper {
-		padding: 20px 0 60px;
+		padding: 20px 0 75px;
 	}
 
 	.overlay.photo-upload-overlay .overlayPanel {
@@ -305,6 +310,7 @@ a {
 	}
 
 	.add-photo {
+		width: 60px;
 		height: 60px;
 		line-height: 60px;
 		bottom: -65px;
@@ -593,5 +599,5 @@ input.form-control {
 }
 
 .placeholder-image {
-	content:url("../img/image-placeholder.png");
+	content: url("../img/image-placeholder.png");
 }
