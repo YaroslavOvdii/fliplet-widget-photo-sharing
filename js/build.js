@@ -487,11 +487,10 @@ $('[data-photo-sharing-id]').each(function(){
   }());
 
   if(Fliplet.Env.get('platform') === 'web') {
-
       initPhotoFeed();
       $('.photo-feed-parent-holder').parent().on("fliplet_page_reloaded", initPhotoFeed);
   } else {
-      document.addEventListener("deviceready", initPhotoFeed);
+    Fliplet.Navigator.onReady().then(initPhotoFeed);
   }
 
   function initPhotoFeed(){
