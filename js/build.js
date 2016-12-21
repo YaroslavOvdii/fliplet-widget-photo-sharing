@@ -468,7 +468,7 @@ $('[data-photo-sharing-id]').each(function(){
         var template = Handlebars.compile(source);
         var imagesSlice = window.feedImages.slice(window.imagesLoaded, window.imagesLoaded + _this.imageChunkSize);
         if (imagesSlice.length) {
-          var html = template(window.feedImages);
+          var html = template(imagesSlice);
           $('.stream-wrapper').append(html);
           window.imagesLoaded += _this.imageChunkSize;
         }
