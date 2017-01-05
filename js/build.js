@@ -1,6 +1,7 @@
 $('[data-photo-sharing-id]').each(function(){
   var $container = $(this);
   var widgetId = $container.data('photo-sharing-id');
+  var widgetUuid = $container.data('photo-sharing-uuid');
   var data = Fliplet.Widget.getData(widgetId) || {};
   var connection;
 
@@ -47,7 +48,7 @@ $('[data-photo-sharing-id]').each(function(){
           name: ""
         };
 
-        window.pvName = "photo_feed_" + Fliplet.Env.get('appId') + "_" + widgetId;
+        window.pvName = "photo_feed_"+ widgetUuid;
         Fliplet.Security.Storage.init().then(function(){
           Fliplet.Security.Storage.create(pvName, structure).then(function(data){
             window.photoUserPV = data;
