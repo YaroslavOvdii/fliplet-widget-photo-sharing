@@ -23,7 +23,7 @@ $('[data-photo-sharing-id]').each(function(){
       constructor: PhotoFeed,
       getConnection: function() {
         if (!connection) {
-          connection = Fliplet.DataSources.connect(_this.config.dataSourceId);
+          connection = Fliplet.DataSources.connect(_this.config.dataSourceId, { offline: false });
         }
 
         return connection;
