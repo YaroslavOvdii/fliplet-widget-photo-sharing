@@ -92,6 +92,7 @@ function Overlay(content, options, callback) {
       // For IE9+
       var evt = document.createEvent('CustomEvent');
       evt.initCustomEvent('flRenderApp', true, true);
+      document.dispatchEvent(evt);
     }
     if (typeof (callback) === 'function') {
       callback(self);

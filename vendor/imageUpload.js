@@ -149,9 +149,9 @@ function uploadPhoto(imageURI) {
       $canvas[0].dispatchEvent(customEvent);
     } catch (e) {
       // For IE9+
-      // @TODO: How can we dispatch an event from $canvas[0]?
       var evt = document.createEvent('CustomEvent');
       evt.initCustomEvent('thumbCanvasReady', true, true);
+      $canvas[0].dispatchEvent(evt);
     }
 	};
 	img.src = imgsrc;
