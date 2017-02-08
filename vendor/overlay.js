@@ -79,14 +79,20 @@ function Overlay(content, options, callback) {
     // The `flRenderApp` event is dispatched so that any JavaScript that needs to be
     // run can be executed through an event listener.
     // e.g. document.addEventListener( 'flRenderApp', function(){ // Run JavaScript code here } );
-    var event = new CustomEvent(
-      "flRenderApp",
-      {
-        bubbles: true,
-        cancelable: true
-      }
-    );
-    document.dispatchEvent(event);
+    try {
+      var customEvent = new CustomEvent(
+        'flRenderApp',
+        {
+          bubbles: true,
+          cancelable: true
+        }
+      );
+      document.dispatchEvent(customEvent);
+    } catch (e) {
+      // For IE9+
+      var evt = document.createEvent('CustomEvent');
+      evt.initCustomEvent('flRenderApp', true, true);
+    }
     if (typeof (callback) === 'function') {
       callback(self);
     }
