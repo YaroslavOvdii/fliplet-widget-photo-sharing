@@ -41,5 +41,8 @@
       "img/image-placeholder.png",
       "img/image-placeholder-2.png"
     ]
-  }
+  },
+  "references": [
+    "dataSourceId:dataSource"
+  ]
 }
