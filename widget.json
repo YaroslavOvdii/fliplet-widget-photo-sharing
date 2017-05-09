@@ -43,6 +43,9 @@
     ]
   },
   "references": [
-    "dataSourceId:dataSource"
+    "dataSourceId:dataSource",
+    "data.folder.folderId:mediaFolder",
+    "data.folder.appId:app",
+    "data.folder.organizationId:organization"
   ]
 }
