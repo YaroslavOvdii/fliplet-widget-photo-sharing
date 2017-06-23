@@ -9,7 +9,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.context-build .fl-widget-instance {
+.context-build section>.fl-widget-instance {
   height: 100%;
 }
 
