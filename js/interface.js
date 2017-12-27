@@ -266,6 +266,22 @@ $('[data-create-source]').click(function (event) {
   });
 });
 
+$('#manage-data').on('click', function() {
+  console.log('TODO');
+  var dataSourceId = $dataSource.val();
+  // @TODO:
+  // Open overlay to data sources provider with ID
+});
+
+$dataSource.on( 'change', function() {
+  var selectedDataSourceId = $(this).val();
+  if (selectedDataSourceId && selectedDataSourceId !== '') {
+    $('#manage-data').removeClass('hidden');
+  } else {
+    $('#manage-data').addClass('hidden');
+  }
+});
+
 // 1. Fired from Fliplet Studio when the external save button is clicked
 Fliplet.Widget.onSaveRequest(function () {
   $('form').submit();

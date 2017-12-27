@@ -34,6 +34,11 @@ header a {
     text-decoration: none;
 }
 
+#manage-data {
+  width: 100%;
+  margin-top: 10px;
+}
+
 .title-header p {
     color: #14505e;
 }
