@@ -116,6 +116,25 @@ function updatePaths() {
   $('.helper strong').html(upTo[upTo.length - 1].name);
 }
 
+function reloadDataSources(dataSourceId) {
+  return Fliplet.DataSources.get({
+    type: null
+  }, {
+    cache: false
+  }).then(function(results) {
+    allDataSources = results;
+    $dataSource.html('<option value="">-- Select a data source</option>');
+    allDataSources.forEach(function (d) {
+      $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
+    });
+
+    if (dataSourceId) {
+      $dataSource.val(dataSourceId);
+    }
+    $dataSource.trigger('change');
+  });
+}
+
 // init
 openRoot();
 
@@ -264,6 +283,34 @@ $('[data-create-source]').click(function (event) {
     $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
     $dataSource.val(d.id);
   });
+});
+
+$('#manage-data').on('click', function() {
+  var dataSourceId = $dataSource.val();
+  Fliplet.Studio.emit('overlay', {
+    name: 'widget',
+    options: {
+      size: 'large',
+      package: 'com.fliplet.data-sources',
+      title: 'Edit Data Sources',
+      data: { dataSourceId: dataSourceId }
+    }
+  });
+});
+
+$dataSource.on( 'change', function() {
+  var selectedDataSourceId = $(this).val();
+  if (selectedDataSourceId && selectedDataSourceId !== '') {
+    $('#manage-data').removeClass('hidden');
+  } else {
+    $('#manage-data').addClass('hidden');
+  }
+});
+
+Fliplet.Studio.onMessage(function(event) {
+  if (event.data && event.data.event === 'overlay-close') {
+    reloadDataSources(event.data.data.dataSourceId);
+  }
 });
 
 // 1. Fired from Fliplet Studio when the external save button is clicked

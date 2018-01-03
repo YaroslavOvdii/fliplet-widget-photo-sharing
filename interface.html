@@ -4,19 +4,22 @@
       <p>Configure your photo sharing feed</p>
       <a id="help_tip" href="#">Need help?</a>
     </header>
-
     <div class="form-group clearfix">
       <div class="col-sm-4 control-label">
         <label>Which data source should photo entries be saved to?</label>
       </div>
       <div class="col-sm-8">
-        <select name="dataSource" class="form-control" required>
-          <option value="">-- Select data source --</option>
-        </select>
+        <label for="dataSource" class="select-proxy-display">
+          <select name="dataSource" id="dataSource" class="hidden-select form-control" data-label="select" required>
+            <option value="">-- Select data source --</option>
+          </select>
+          <span class="icon fa fa-chevron-down"></span>
+          <span class="select-value-proxy">-- Select data source --</span>
+        </label>
         <small>or just <a href="#" data-create-source>create a new data source</a></small>
+        <div class="btn btn-default hidden" id="manage-data">Edit data</div>
       </div>
     </div>
-
     <div class="form-group clearfix">
       <div class="col-sm-4 control-label">
         <label for="primaryButtonLabel">Photo reports will be sent to...</label>
@@ -26,98 +29,92 @@
         <p class="help-block">If no email address is specified, an email will be sent to support@fliplet.com</p>
       </div>
     </div>
-
     <div class="title-header">
       <p>Select the folder where the photos are stored.</p>
     </div>
-
     <div class="gallery-tool clearfix">
       <div class="breadcrumbs-select">
         <div class="helper"><strong>Root</strong></div>
       </div>
       <div class="back-btn">
-          Up to <span class="up-to">Folder Name</span>
+        Up to <span class="up-to">Folder Name</span>
       </div>
     </div>
     <div class="folder-selection">
-        <span>Select a folder below</span>
+      <span>Select a folder below</span>
     </div>
     <div class="image-library"></div>
-
   </form>
 </div>
 <!-- Templates -->
 <script id="template-folder" type="text/template">
-    <div class="col-xs-4 item-holder folder" data-folder-id="\{{id}}" data-parent-id="\{{parentId}}" }>
-        <div class="image-holder">
-            <div class="image-overlay">
-                <i class="fa fa-folder" aria-hidden="true"></i>
-            </div>
-            <div class="image-info">
-                <p>
-                    <strong>\{{name}}</strong>
-                </p>
-                <p>
-                    Double click to open the folder
-                </p>
-            </div>
-        </div>
-        <div class="image-title">
-            <p>
-                <strong>\{{name}}</strong>
-            </p>
-        </div>
+  <div class="col-xs-4 item-holder folder" data-folder-id="\{{id}}" data-parent-id="\{{parentId}}" }>
+    <div class="image-holder">
+      <div class="image-overlay">
+        <i class="fa fa-folder" aria-hidden="true"></i>
+      </div>
+      <div class="image-info">
+        <p>
+          <strong>\{{name}}</strong>
+        </p>
+        <p>
+          Double click to open the folder
+        </p>
+      </div>
     </div>
+    <div class="image-title">
+      <p>
+        <strong>\{{name}}</strong>
+      </p>
+    </div>
+  </div>
 </script>
-
 <script id="template-app" type="text/template">
-    <div class="col-xs-4 item-holder folder" data-app-id="\{{id}}">
-        <div class="image-holder">
-            <div class="image-overlay">
-                <i class="fa fa-folder" aria-hidden="true"></i>
-            </div>
-            <div class="image-info">
-                <p>
-                    <strong>\{{name}}</strong>
-                </p>
-                <p>
-                    Double click to open the folder
-                </p>
-            </div>
-        </div>
-        <div class="image-title">
-            <p>
-                <strong>\{{name}}</strong>
-            </p>
-        </div>
+  <div class="col-xs-4 item-holder folder" data-app-id="\{{id}}">
+    <div class="image-holder">
+      <div class="image-overlay">
+        <i class="fa fa-folder" aria-hidden="true"></i>
+      </div>
+      <div class="image-info">
+        <p>
+          <strong>\{{name}}</strong>
+        </p>
+        <p>
+          Double click to open the folder
+        </p>
+      </div>
     </div>
+    <div class="image-title">
+      <p>
+        <strong>\{{name}}</strong>
+      </p>
+    </div>
+  </div>
 </script>
-
 <script id="template-organization" type="text/template">
-    <div class="col-xs-4 item-holder folder" data-organization-id="\{{id}}">
-        <div class="image-holder">
-            <div class="image-overlay">
-                <i class="fa fa-folder" aria-hidden="true"></i>
-            </div>
-            <div class="image-info">
-                <p>
-                    <strong>\{{name}}</strong>
-                </p>
-                <p>
-                    Double click to open the folder
-                </p>
-            </div>
-        </div>
-        <div class="image-title">
-            <p>
-                <strong>\{{name}}</strong>
-            </p>
-        </div>
+  <div class="col-xs-4 item-holder folder" data-organization-id="\{{id}}">
+    <div class="image-holder">
+      <div class="image-overlay">
+        <i class="fa fa-folder" aria-hidden="true"></i>
+      </div>
+      <div class="image-info">
+        <p>
+          <strong>\{{name}}</strong>
+        </p>
+        <p>
+          Double click to open the folder
+        </p>
+      </div>
     </div>
+    <div class="image-title">
+      <p>
+        <strong>\{{name}}</strong>
+      </p>
+    </div>
+  </div>
 </script>
-
 <script id="template-nofiles" type="text/template">
-    <div class="nofiles-msg">
-        <p>This folder is empty.</p>
-    </div>
+  <div class="nofiles-msg">
+    <p>This folder is empty.</p>
+  </div>
 </script>
