@@ -123,7 +123,7 @@ function reloadDataSources(dataSourceId) {
     cache: false
   }).then(function(results) {
     allDataSources = results;
-    $dataSource.html('<option value="">-- Select a data source</option>');
+    $dataSource.html('<option value="none">-- Select a data source</option><option disabled>------</option><option value="new">Create a new data source</option><option disabled>------</option>');
     allDataSources.forEach(function (d) {
       $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
     });
@@ -134,6 +134,29 @@ function reloadDataSources(dataSourceId) {
     $dataSource.trigger('change');
   });
 }
+
+function createDataSource() {
+  var name = prompt('Please type a name for your data source:');
+
+  if (name === null) {
+    $dataSource.val('none').trigger('change');
+    return;
+  }
+
+  if (name === '') {
+    $dataSource.val('none').trigger('change');
+    alert('You must enter a data source name');
+    return;
+  }
+
+  Fliplet.DataSources.create({
+    name: name, organizationId:
+    organizationId
+  }).then(function (d) {
+    $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
+    $dataSource.val(d.id);
+  });
+};
 
 // init
 openRoot();
@@ -268,23 +291,6 @@ $('.back-btn').click(function () {
   updatePaths();
 });
 
-$('[data-create-source]').click(function (event) {
-  event.preventDefault();
-  var name = prompt('Please type a name for your data source:');
-
-  if (!name) {
-    return;
-  }
-
-  Fliplet.DataSources.create({
-    name: name, organizationId:
-    organizationId
-  }).then(function (d) {
-    $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
-    $dataSource.val(d.id);
-  });
-});
-
 $('#manage-data').on('click', function() {
   var dataSourceId = $dataSource.val();
   Fliplet.Studio.emit('overlay', {
@@ -293,17 +299,25 @@ $('#manage-data').on('click', function() {
       size: 'large',
       package: 'com.fliplet.data-sources',
       title: 'Edit Data Sources',
-      data: { dataSourceId: dataSourceId }
+      classes: 'data-source-overlay',
+      data: {
+        context: 'overlay',
+        dataSourceId: dataSourceId
+      }
     }
   });
 });
 
 $dataSource.on( 'change', function() {
   var selectedDataSourceId = $(this).val();
-  if (selectedDataSourceId && selectedDataSourceId !== '') {
+  if (selectedDataSourceId && selectedDataSourceId !== 'none' && selectedDataSourceId !== 'new') {
     $('#manage-data').removeClass('hidden');
   } else {
     $('#manage-data').addClass('hidden');
+  }
+
+  if (selectedDataSourceId === 'new') {
+    createDataSource();
   }
 });
 
