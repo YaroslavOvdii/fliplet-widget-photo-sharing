@@ -366,7 +366,6 @@ $('[data-photo-sharing-id]').each(function(){
               _this.removeOfflineMessage();
               // Get the images
               window.feedImages = _this.processImageFeed(rows);
-              console.log(window.feedImages);
 
               // Clear the feed
               $(".stream-wrapper").html('');
