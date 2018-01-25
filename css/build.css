@@ -112,6 +112,10 @@ body {
   bottom: 15px;
 }
 
+.fl-bar-padding .add-photo.ready {
+  bottom: 59px;
+}
+
 .stream-wrapper {
   position: relative;
   margin-left: -15px;
