@@ -45,6 +45,10 @@ body {
   display: none;
 }
 
+.fl-menu-circle-right .photo-sharing-wrapper {
+  padding-bottom: 80px;
+}
+
 .photo-sharing-wrapper .reach-end {
   display: none;
   opacity: 0.4;
@@ -114,6 +118,10 @@ body {
 
 .fl-bar-padding .add-photo.ready {
   bottom: 59px;
+}
+
+.fl-menu-circle-right .add-photo.ready {
+  bottom: 85px;
 }
 
 .stream-wrapper {
@@ -218,21 +226,17 @@ body {
 }
 
 @media (min-width: 640px) {
-  .photo-sharing-wrapper {
+  .photo-sharing-wrapper,
+  .fl-menu-circle-right .photo-sharing-wrapper {
     padding: 20px 0 75px;
   }
+
   .overlay.photo-upload-overlay .overlayPanel {
     width: 46%;
     top: 5%;
     left: 27%;
     bottom: 10%;
     right: 27%;
-  }
-  .add-photo {
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    bottom: -65px;
   }
   .refresh {
     width: auto;
