@@ -33,10 +33,8 @@
       "moment"
     ],
     "assets": [
-      "vendor/overlay.js",
       "vendor/imageUpload.js",
       "js/build.js",
-      "vendor/overlay.css",
       "css/build.css",
       "img/image-placeholder.png",
       "img/image-placeholder-2.png"
