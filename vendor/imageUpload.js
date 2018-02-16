@@ -46,6 +46,9 @@ function onDeviceReady() {
 		};
 
 		var buttonLabels = ["Take Photo", "Choose Existing Photo", "Cancel"];
+		if (Modernizr.windows) {
+			buttonLabels = ["Take Photo", "Choose Existing Photo"];
+		}
 	 	navigator.notification.confirm(
 			'How do you want to choose your image?',
 			onConfirm,
