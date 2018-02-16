@@ -139,7 +139,7 @@ $('[data-photo-sharing-id]').each(function(){
           var html = template();
 
           // Create a new Overlay
-          _this.overlay = new Overlay(html, {
+          _this.overlay = Fliplet.Utils.Overlay(html, {
             showOnInit: true,
             classes: 'photo-upload-overlay',
             title: 'Photo upload'
