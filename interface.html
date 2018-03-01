@@ -31,21 +31,20 @@
         <p class="help-block">If no email address is specified, an email will be sent to support@fliplet.com</p>
       </div>
     </div>
-    <div class="title-header">
-      <p>Select the folder where the photos are stored.</p>
-    </div>
-    <div class="gallery-tool clearfix">
-      <div class="breadcrumbs-select">
-        <div class="helper"><strong>Root</strong></div>
+    <div class="form-group clearfix">
+      <div class="col-sm-4 control-label">
+        <label>Select the folder where the photos are stored</label>
       </div>
-      <div class="back-btn">
-        Up to <span class="up-to">Folder Name</span>
+      <div class="col-sm-8">
+        <div class="folder-btn-holder">
+          <div class="btn btn-default select-folder">{{#unless folderData.selectFiles}}Browse your folder library{{else}}Replace folder{{/unless}}</div>
+          <div class="info-holder clearfix {{#unless folderData.selectFiles}}hidden{{/unless}}">
+            <div class="folder-title"><i class="fa fa-folder"></i> Selected folder: <strong><span>{{folderData.selectFiles.0.name}}</span></strong></div>
+            <a href="#" class="browse-files">See files</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="folder-selection">
-      <span>Select a folder below</span>
-    </div>
-    <div class="image-library"></div>
   </form>
 </div>
 <!-- Templates -->

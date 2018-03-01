@@ -2,118 +2,19 @@ var widgetId = Fliplet.Widget.getDefaultId();
 var data = Fliplet.Widget.getData() || {};
 var $dataSource = $('select[name="dataSource"]');
 var organizationId = Fliplet.Env.get('organizationId');
+var folderData;
+var providerFilePickerInstance;
+var filePickerData = {};
 
-var $imagesContainer = $('.image-library');
-var templates = {
-  folder: template('folder'),
-  app: template('app'),
-  organization: template('organization'),
-  noFiles: template('nofiles')
-};
+data.folder = $.extend(true, {}, data.folder);
 
-function addFolder(folder) {
-  $imagesContainer.append(templates.folder(folder));
-}
-
-function addApp(app) {
-  $imagesContainer.append(templates.app(app));
-}
-
-function addOrganization(organization) {
-  $imagesContainer.append(templates.organization(organization));
-}
-
-function noFiles() {
-  $imagesContainer.html(templates.noFiles());
-}
-
-function template(name) {
-  return Handlebars.compile($('#template-' + name).html());
-}
-
-var upTo = [{ back: openRoot, name: 'Root'}];
-var folders,
-    apps,
-    organizations;
-
-function getApps() {
-  return Fliplet.Apps
-    .get()
-    .then(function (apps) {
-      return apps.filter(function (app) {
-        return !app.legacy;
-      });
-    });
-}
-
-function openRoot() {
-  // Clean library container
-  $imagesContainer.html('');
-
-  // Update paths
-  updatePaths();
-
-  var organizationId = Fliplet.Env.get('organizationId');
-  return Promise.all([
-    Fliplet.Organizations.get(),
-    getApps()
-  ])
-    .then(function renderRoot(values) {
-      organizations = values[0];
-      apps = values[1];
-
-      values[0].forEach(addOrganization);
-      values[1].forEach(addApp);
-    });
-}
-
-function openFolder(folderId) {
-  Fliplet.Media.Folders.get({ type: 'folders', folderId: folderId })
-    .then(renderFolderContent);
-}
-
-function openApp(appId) {
-  Fliplet.Media.Folders.get({ type: 'folders', appId: appId })
-    .then(renderFolderContent);
-}
-
-function openOrganization(organizationId) {
-  Fliplet.Media.Folders.get({ type: 'folders', organizationId: organizationId })
-    .then(renderFolderContent);
-}
-
-function renderFolderContent(values) {
-  $('.folder-selection span').html('Select an folder below');
-  $imagesContainer.html('');
-
-  if (!values.folders.length) {
-    return noFiles();
-  }
-
-  folders = values.folders;
-
-  // Render folders and files
-  _.sortBy(values.folders, ['name']).forEach(addFolder);
-}
-
-function updatePaths() {
-  if (upTo.length === 1) {
-    // Hide them
-    $('.back-btn').hide();
-    $('.breadcrumbs-select').hide();
-
-    return;
-  }
-
-  // Show them
-  $('.breadcrumbs-select').show();
-  $('.back-btn').show();
-
-  // Parent folder
-  $('.up-to').html(upTo[upTo.length - 2].name);
-
-  // Current folder
-  $('.helper strong').html(upTo[upTo.length - 1].name);
+function filePickerDataInit() {
+  folderData = $.extend(true, {
+    selectedFiles: {},
+    selectFiles: [], // To use the restore on File Picker
+    selectMultiple: false,
+    type: 'folder'
+  }, data.folderData);
 }
 
 function reloadDataSources(dataSourceId) {
@@ -159,7 +60,7 @@ function createDataSource() {
 };
 
 // init
-openRoot();
+filePickerDataInit();
 
 Fliplet.DataSources.get({
   organizationId: organizationId
@@ -173,122 +74,46 @@ Fliplet.DataSources.get({
   }
 });
 
-$('.image-library')
-  .on('dblclick', '[data-folder-id]', function () {
-    var $el = $(this);
-    var id = $el.data('folder-id');
-    var backItem;
+$('.folder-btn-holder').on('click', '.select-folder', function() {
 
-    // Store to nav stack
-    backItem = _.find(folders, ['id', id]);
-    backItem.back = function () {
-      openFolder(id);
-    };
-    upTo.push(backItem);
+  Fliplet.Widget.toggleSaveButton(data.folderData && data.folderData.selectFiles && data.folderData.selectFiles.length > 0);
 
-    // Open
-    openFolder(id);
-
-    // Update paths
-    updatePaths();
-  })
-  .on('dblclick', '[data-app-id]', function () {
-    var $el = $(this);
-    var id = $el.data('app-id');
-    var backItem;
-
-    // Store to nav stack
-    backItem = _.find(apps, ['id', id]);
-    backItem.back = function () {
-      openApp(id);
-    };
-    upTo.push(backItem);
-
-    // Open
-    openApp(id);
-
-    // Update paths
-    updatePaths();
-  })
-  .on('dblclick', '[data-organization-id]', function () {
-    var $el = $(this);
-    var id = $el.data('organization-id');
-    var backItem;
-
-    // Store to nav stack
-    backItem = _.find(organizations, ['id', id]);
-    backItem.back = function () {
-      openOrganization(id);
-    };
-    upTo.push(backItem);
-
-    // Open
-    openOrganization(id);
-
-    // Update paths
-    updatePaths();
-
-  })
-  .on('click', '[data-folder-id]', function () {
-    var $el = $(this);
-    // Removes any selected folder
-    $('.folder').not(this).each(function(){
-      $(this).removeClass('selected');
-    });
-
-    if ($el.hasClass('selected')) {
-      $('.folder-selection span').html('Select a folder below');
-      data.folder = {};
-    } else {
-      $('.folder-selection span').html('You have selected a folder');
-      data.folder = { folderId: $el.data('folder-id') };
-    }
-
-    $el.toggleClass('selected');
-  })
-  .on('click', '[data-app-id]', function () {
-    var $el = $(this);
-    // Removes any selected folder
-    $('.folder').not(this).each(function(){
-      $(this).removeClass('selected');
-    });
-
-    if ($el.hasClass('selected')) {
-      $('.folder-selection span').html('Select a folder below');
-      data.folder = {};
-    } else {
-      $('.folder-selection span').html('You have selected a folder');
-      data.folder = { appId: $el.data('app-id') };
-    }
-
-    $el.toggleClass('selected');
-  })
-  .on('click', '[data-organization-id]', function () {
-    var $el = $(this);
-    // Removes any selected folder
-    $('.folder').not(this).each(function(){
-      $(this).removeClass('selected');
-    });
-
-    if ($el.hasClass('selected')) {
-      $('.folder-selection span').html('Select a folder below');
-      data.folder = {};
-    } else {
-      $('.folder-selection span').html('You have selected a folder');
-      data.folder = { organizationId: $el.data('organization-id') };
-    }
-
-    $el.toggleClass('selected');
+  Fliplet.Studio.emit('widget-save-label-update', {
+    text: 'Select'
   });
 
-$('.back-btn').click(function () {
-  if (upTo.length === 1) {
-    return;
-  }
+  providerFilePickerInstance = Fliplet.Widget.open('com.fliplet.file-picker', {
+    data: folderData,
+    onEvent: function(e, data) {
+      switch (e) {
+        case 'widget-rendered':
+          break;
+        case 'widget-set-info':
+          Fliplet.Widget.toggleSaveButton(!!data.length);
+          var msg = data.length ? data.length + ' files selected' : 'no selected files';
+          Fliplet.Widget.info(msg);
+          break;
+        default:
+          break;
+      }
+    }
+  });
 
-  upTo.pop();
-  upTo[upTo.length-1].back();
-  updatePaths();
+  providerFilePickerInstance.then(function(data) {
+    Fliplet.Widget.info('');
+    Fliplet.Widget.toggleCancelButton(true);
+    Fliplet.Widget.toggleSaveButton(true);
+    filePickerData.selectFiles = data.data.length ? data.data : [];
+    providerFilePickerInstance = null;
+    Fliplet.Studio.emit('widget-save-label-update', {
+      text: 'Save & Close'
+    });
+    if (filePickerData.selectFiles.length) {
+      $('.folder-btn-holder .select-folder').text('Replace folder');
+      $('.folder-btn-holder .info-holder').removeClass('hidden');
+      $('.folder-btn-holder .folder-title span').text(filePickerData.selectFiles[0].name);
+    }
+  });
 });
 
 $('#manage-data').on('click', function() {
@@ -303,6 +128,24 @@ $('#manage-data').on('click', function() {
       data: {
         context: 'overlay',
         dataSourceId: dataSourceId
+      }
+    }
+  });
+});
+
+$('.browse-files').on('click', function(e) {
+  e.preventDefault();
+  
+  Fliplet.Studio.emit('overlay', {
+    name: 'widget',
+    options: {
+      size: 'large',
+      package: 'com.fliplet.file-manager',
+      title: 'File Manager',
+      classes: 'data-source-overlay',
+      data: {
+        context: 'overlay',
+        appId: Fliplet.Env.get('appId')
       }
     }
   });
@@ -329,6 +172,10 @@ Fliplet.Studio.onMessage(function(event) {
 
 // 1. Fired from Fliplet Studio when the external save button is clicked
 Fliplet.Widget.onSaveRequest(function () {
+  if (providerFilePickerInstance) {
+    return providerFilePickerInstance.forwardSaveRequest();
+  }
+
   $('form').submit();
 });
 
@@ -360,6 +207,8 @@ function emailValidate(email) {
 function save(notifyComplete) {
   data.reportEmail = $('#report_email').val();
   data.dataSourceId = $dataSource.val();
+  data.folderData = filePickerData && !_.isEmpty(filePickerData) ? filePickerData : data.folder.data;
+  data.folder.folderId = filePickerData && !_.isEmpty(filePickerData) ? filePickerData.selectFiles[0].id : data.folder.folderId;
 
   Fliplet.Widget.save(data).then(function () {
     if (notifyComplete) {
