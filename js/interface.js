@@ -4,7 +4,7 @@ var $dataSource = $('select[name="dataSource"]');
 var organizationId = Fliplet.Env.get('organizationId');
 var folderData;
 var providerFilePickerInstance;
-var filePickerData = {};
+var filePickerData = data.folderData || {};;
 
 data.folder = $.extend(true, {}, data.folder);
 
@@ -145,7 +145,9 @@ $('.browse-files').on('click', function(e) {
       classes: 'data-source-overlay',
       data: {
         context: 'overlay',
-        appId: Fliplet.Env.get('appId')
+        appId: Fliplet.Env.get('appId'),
+        folder: filePickerData.selectFiles[0],
+        navStack: filePickerData.selectFiles[1]
       }
     }
   });
