@@ -167,7 +167,7 @@ $dataSource.on( 'change', function() {
 });
 
 Fliplet.Studio.onMessage(function(event) {
-  if (event.data && event.data.event === 'overlay-close') {
+  if (event.data && event.data.event === 'overlay-close' && event.data.data && event.data.data.dataSourceId) {
     reloadDataSources(event.data.data.dataSourceId);
   }
 });
