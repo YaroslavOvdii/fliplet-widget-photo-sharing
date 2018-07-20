@@ -441,7 +441,7 @@ $('[data-photo-sharing-id]').each(function(){
         });
 
         for (var i = 0, l = submissions.length; i < l; i++) {
-          submissionUrl = submissions[i].data.imageURL;
+          submissionUrl = Fliplet.Media.authenticate(submissions[i].data.imageURL);
           submissionDate = submissions[i].data.uploadedAt;
           image = {
             url: submissionUrl,
