@@ -13,6 +13,9 @@ body {
   height: 100%;
 }
 
+.mode-interact .fl-widget-instance[data-name="Photo Sharing"] {
+  height: 100%;
+}
 
 /* Photo Sharing */
 
