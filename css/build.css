@@ -127,7 +127,8 @@ body {
   bottom: calc(env(safe-area-inset-bottom) + 59px);
 }
 
-.fl-menu-circle-right .add-photo.ready {
+.fl-menu-circle-right .add-photo.ready,
+.fl-menu-bottom-bar .add-photo.ready {
   bottom: 85px;
   bottom: calc(constant(safe-area-inset-bottom) + 85px);
   bottom: calc(env(safe-area-inset-bottom) + 85px);
