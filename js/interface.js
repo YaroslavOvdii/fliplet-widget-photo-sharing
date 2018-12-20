@@ -2,6 +2,7 @@ var widgetId = Fliplet.Widget.getDefaultId();
 var data = Fliplet.Widget.getData() || {};
 var $dataSource = $('select[name="dataSource"]');
 var organizationId = Fliplet.Env.get('organizationId');
+var appId = Fliplet.Env.get('appId');
 var folderData;
 var providerFilePickerInstance;
 var filePickerData = data.folderData || {};;
@@ -63,7 +64,8 @@ function createDataSource() {
 filePickerDataInit();
 
 Fliplet.DataSources.get({
-  organizationId: organizationId
+  organizationId: organizationId,
+  appId: appId
 }).then(function (dataSources) {
   dataSources.forEach(function (d) {
     $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
