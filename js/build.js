@@ -362,65 +362,71 @@ $('[data-photo-sharing-id]').each(function(){
           _this.getConnection().then(function (connection) {
             return connection.find();
           }).then(function (rows) {
-            if (rows.length >= 0) {
-              _this.removeOfflineMessage();
-              // Get the images
-              window.feedImages = _this.processImageFeed(rows);
-
-              // Clear the feed
-              $(".stream-wrapper").html('');
-
-              // Render the feed
-              window.imagesLoaded = 0;
-              _this.renderImageFeed();
-
-              if (window.feedImages.length === 0) {
-                $('.empty-feed-msg').show();
-              } else if ( window.feedImages.length > 0 ) {
-                $('.empty-feed-msg').hide();
-              }
-
-              // Show/hide messages and buttons
-              if (window.imagesLoaded < window.feedImages.length) {
-                $('.load-more').show();
-              }
-
-              $('.refresh').show();
-
-              var $loadingMessageHolder = $('.photo-sharing-loading-holder');
-              if ($loadingMessageHolder.hasClass('failed')) {
-                $loadingMessageHolder.removeClass('failed');
-              }
-              $loadingMessageHolder.addClass('loaded');
-              var $wrapper = $('.photo-sharing-wrapper');
-              $wrapper.addClass('ready');
-              _this.hideRefreshAnimation();
-              _this.moveElements();
-
-              // Calculate .image-container max-height and height
-              var max_height = 400;
-
-              var c_width = $('.image-container').width();
-              $('.image-container').each(function(i){
-                $(this).css({
-                  maxHeight: Math.min( max_height, window.feedImages[i].height ) + 'px',
-                  height: c_width * (window.feedImages[i].height/window.feedImages[i].width) + 'px'
-                });
-              });
-
-              if ($wrapper.height() >= $(document).height()) {
-                $('.reach-end').show();
-              }
-            } else {
-              if (Fliplet.Env.get('platform') === 'web') {
-                Fliplet.Navigate.popup({
-                  popupTitle: 'Data Source Error',
-                  popupMessage: 'It seems there is an issue with your data source. Please contact support if the problem persists.'
-                });
-                return;
-              }
-              navigator.notification.alert("It seems there is an issue with your data source. Please contact support if the problem persists.", function() {}, 'Data Source Error', 'Close');
+            if (!rows.length) {
+              return Promise.reject();
             }
+
+            _this.removeOfflineMessage();
+            // Get the images
+            window.feedImages = _this.processImageFeed(rows);
+
+            // Clear the feed
+            $(".stream-wrapper").html('');
+
+            // Render the feed
+            window.imagesLoaded = 0;
+            _this.renderImageFeed();
+
+            if (window.feedImages.length === 0) {
+              $('.empty-feed-msg').show();
+            } else if ( window.feedImages.length > 0 ) {
+              $('.empty-feed-msg').hide();
+            }
+
+            // Show/hide messages and buttons
+            if (window.imagesLoaded < window.feedImages.length) {
+              $('.load-more').show();
+            }
+
+            $('.refresh').show();
+
+            var $loadingMessageHolder = $('.photo-sharing-loading-holder');
+            if ($loadingMessageHolder.hasClass('failed')) {
+              $loadingMessageHolder.removeClass('failed');
+            }
+            $loadingMessageHolder.addClass('loaded');
+            var $wrapper = $('.photo-sharing-wrapper');
+            $wrapper.addClass('ready');
+            _this.hideRefreshAnimation();
+            _this.moveElements();
+
+            // Calculate .image-container max-height and height
+            var max_height = 400;
+
+            var c_width = $('.image-container').width();
+            $('.image-container').each(function(i){
+              $(this).css({
+                maxHeight: Math.min( max_height, window.feedImages[i].height ) + 'px',
+                height: c_width * (window.feedImages[i].height/window.feedImages[i].width) + 'px'
+              });
+            });
+
+            if ($wrapper.height() >= $(document).height()) {
+              $('.reach-end').show();
+            }
+          }).catch(function () {
+            $loadingMessageHolder.addClass('loaded');
+            $('.photo-sharing-wrapper').addClass('ready');
+            _this.hideRefreshAnimation();
+
+            if (Fliplet.Env.get('platform') === 'web') {
+              Fliplet.Navigate.popup({
+                popupTitle: 'Data Source Error',
+                popupMessage: 'It seems there is an issue with your data source. Please contact support if the problem persists.'
+              });
+              return;
+            }
+            navigator.notification.alert("It seems there is an issue with your data source. Please contact support if the problem persists.", function() {}, 'Data Source Error', 'Close');
           });
 
         } else {
