@@ -415,7 +415,7 @@ $('[data-photo-sharing-id]').each(function(){
               $('.reach-end').show();
             }
           }).catch(function () {
-            $loadingMessageHolder.addClass('loaded');
+            $('.photo-sharing-loading-holder').addClass('loaded');
             $('.photo-sharing-wrapper').addClass('ready');
             _this.hideRefreshAnimation();
 
