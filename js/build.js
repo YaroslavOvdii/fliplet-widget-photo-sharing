@@ -414,19 +414,35 @@ $('[data-photo-sharing-id]').each(function(){
             if ($wrapper.height() >= $(document).height()) {
               $('.reach-end').show();
             }
-          }).catch(function () {
+          }).catch(function (error) {
             $('.photo-sharing-loading-holder').addClass('loaded');
             $('.photo-sharing-wrapper').addClass('ready');
             _this.hideRefreshAnimation();
 
-            if (Fliplet.Env.get('platform') === 'web') {
-              Fliplet.Navigate.popup({
-                popupTitle: 'Data Source Error',
-                popupMessage: 'It seems there is an issue with your data source. Please contact support if the problem persists.'
-              });
+            if (!_this.config.dataSourceId) {
+              console.warn('No data source configured.');
               return;
             }
-            navigator.notification.alert("It seems there is an issue with your data source. Please contact support if the problem persists.", function() {}, 'Data Source Error', 'Close');
+
+            var message = Fliplet.parseError(error);
+            var actions = [];
+
+            if (message) {
+              actions.push({
+                label: 'Details',
+                action: function () {
+                  Fliplet.UI.Toast({
+                    html: message,
+                    duration: false
+                  });
+                }
+              });
+            }
+
+            Fliplet.UI.Toast({
+              message: 'There was an error loading photo feed',
+              actions: actions
+            });
           });
 
         } else {
