@@ -20,7 +20,7 @@ body {
 /* Photo Sharing */
 
 .photo-feed-parent-holder {
-  height: 100%;
+  min-height: 85vh;
   position: relative;
 }
 
