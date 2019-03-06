@@ -362,9 +362,7 @@ $('[data-photo-sharing-id]').each(function(){
           _this.getConnection().then(function (connection) {
             return connection.find();
           }).then(function (rows) {
-            if (!rows.length) {
-              return Promise.reject();
-            }
+            rows = rows || [];
 
             _this.removeOfflineMessage();
             // Get the images
@@ -424,24 +422,8 @@ $('[data-photo-sharing-id]').each(function(){
               return;
             }
 
-            var message = Fliplet.parseError(error);
-            var actions = [];
-
-            if (message) {
-              actions.push({
-                label: 'Details',
-                action: function () {
-                  Fliplet.UI.Toast({
-                    html: message,
-                    duration: false
-                  });
-                }
-              });
-            }
-
-            Fliplet.UI.Toast({
-              message: 'There was an error loading photo feed',
-              actions: actions
+            Fliplet.UI.Toast.error(error, {
+              message: 'Error loading photo feed'
             });
           });
 
