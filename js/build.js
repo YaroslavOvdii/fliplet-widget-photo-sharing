@@ -1,8 +1,5 @@
-$('[data-photo-sharing-id]').each(function(){
-  var $container = $(this);
-  var widgetId = $container.data('photo-sharing-id');
-  var widgetUuid = $container.data('photo-sharing-uuid');
-  var data = Fliplet.Widget.getData(widgetId) || {};
+Fliplet.Widget.instance('photo-sharing', function(data){
+  var widgetUuid = data.uuid;
   var connection;
 
   var PhotoFeed = (function() {
