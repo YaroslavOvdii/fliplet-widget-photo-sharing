@@ -5,7 +5,7 @@ var organizationId = Fliplet.Env.get('organizationId');
 var appId = Fliplet.Env.get('appId');
 var folderData;
 var providerFilePickerInstance;
-var filePickerData = data.folderData || {};;
+var filePickerData = data.folderData || {};
 
 data.folder = $.extend(true, {}, data.folder);
 
@@ -26,7 +26,7 @@ function reloadDataSources(dataSourceId) {
   }).then(function(results) {
     allDataSources = results;
     $dataSource.html('<option value="none">-- Select a data source</option><option disabled>------</option><option value="new">Create a new data source</option><option disabled>------</option>');
-    allDataSources.forEach(function (d) {
+    allDataSources.forEach(function(d) {
       $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
     });
 
@@ -54,11 +54,11 @@ function createDataSource() {
   Fliplet.DataSources.create({
     name: name, organizationId:
     organizationId
-  }).then(function (d) {
+  }).then(function(d) {
     $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
     $dataSource.val(d.id);
   });
-};
+}
 
 // init
 filePickerDataInit();
@@ -66,8 +66,8 @@ filePickerDataInit();
 Fliplet.DataSources.get({
   organizationId: organizationId,
   appId: appId
-}).then(function (dataSources) {
-  dataSources.forEach(function (d) {
+}).then(function(dataSources) {
+  dataSources.forEach(function(d) {
     $dataSource.append('<option value="' + d.id + '">' + d.name + '</option>');
   });
 
@@ -77,7 +77,6 @@ Fliplet.DataSources.get({
 });
 
 $('.folder-btn-holder').on('click', '.select-folder', function() {
-
   Fliplet.Widget.toggleSaveButton(data.folderData && data.folderData.selectFiles && data.folderData.selectFiles.length > 0);
 
   Fliplet.Studio.emit('widget-save-label-update', {
@@ -137,7 +136,7 @@ $('#manage-data').on('click', function() {
 
 $('.browse-files').on('click', function(e) {
   e.preventDefault();
-  
+
   Fliplet.Studio.emit('overlay', {
     name: 'widget',
     options: {
@@ -175,7 +174,7 @@ Fliplet.Studio.onMessage(function(event) {
 });
 
 // 1. Fired from Fliplet Studio when the external save button is clicked
-Fliplet.Widget.onSaveRequest(function () {
+Fliplet.Widget.onSaveRequest(function() {
   if (providerFilePickerInstance) {
     return providerFilePickerInstance.forwardSaveRequest();
   }
@@ -184,7 +183,7 @@ Fliplet.Widget.onSaveRequest(function () {
 });
 
 // 2. Fired when the user submits the form
-$('form').submit(function (event) {
+$('form').submit(function(event) {
   event.preventDefault();
   var email = $('#report_email').val();
   emailValidate(email);
@@ -193,18 +192,16 @@ $('form').submit(function (event) {
 function emailValidate(email) {
   var pattern = new RegExp(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/);
   // Allows saving empty
-  if (email === "") {
+  if (email === '') {
+    $('#report_email').parents('.form-group').removeClass('has-error');
+    save(true);
+  } else if (pattern.test(email)) {
     $('#report_email').parents('.form-group').removeClass('has-error');
     save(true);
   } else {
-    if (pattern.test(email)) {
-      $('#report_email').parents('.form-group').removeClass('has-error');
-      save(true);
-    } else {
-      $('#report_email').parents('.form-group').addClass('has-error');
-      $('#report_email').trigger('focus');
-      return;
-    }
+    $('#report_email').parents('.form-group').addClass('has-error');
+    $('#report_email').trigger('focus');
+    return;
   }
 }
 
@@ -214,7 +211,7 @@ function save(notifyComplete) {
   data.folderData = filePickerData && !_.isEmpty(filePickerData) ? filePickerData : data.folder.data;
   data.folder.folderId = filePickerData && !_.isEmpty(filePickerData) ? filePickerData.selectFiles[0].id : data.folder.folderId;
 
-  Fliplet.Widget.save(data).then(function () {
+  Fliplet.Widget.save(data).then(function() {
     if (notifyComplete) {
       Fliplet.Widget.complete();
       window.location.reload();
@@ -225,5 +222,5 @@ function save(notifyComplete) {
 }
 
 $('#help_tip').on('click', function() {
-  alert("During beta, please use live chat and let us know what you need help with.");
+  alert('During beta, please use live chat and let us know what you need help with.');
 });

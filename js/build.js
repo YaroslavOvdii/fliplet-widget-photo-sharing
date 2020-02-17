@@ -1,4 +1,4 @@
-$('[data-photo-sharing-id]').each(function(){
+$('[data-photo-sharing-id]').each(function() {
   var $container = $(this);
   var widgetId = $container.data('photo-sharing-id');
   var widgetUuid = $container.data('photo-sharing-uuid');
@@ -45,14 +45,14 @@ $('[data-photo-sharing-id]').each(function(){
       },
       initiatePV: function() {
         var structure = {
-          name: ""
+          name: ''
         };
 
-        window.pvName = "photo_feed_"+ widgetUuid;
-        Fliplet.Security.Storage.init().then(function(){
-          Fliplet.Security.Storage.create(pvName, structure).then(function(data){
+        window.pvName = 'photo_feed_' + widgetUuid;
+        Fliplet.Security.Storage.init().then(function() {
+          Fliplet.Security.Storage.create(pvName, structure).then(function(data) {
             window.photoUserPV = data;
-            if (data.name !== "") {
+            if (data.name !== '') {
               $('.user_name').val(data.name);
             }
           });
@@ -62,19 +62,19 @@ $('[data-photo-sharing-id]').each(function(){
       attachOverlayObservers: function() {
         var $name = $('.user_name');
         // When click the upload button
-        $(".upload-button").on('click', function() {
+        $('.upload-button').on('click', function() {
           if (Fliplet.Navigator.isOnline()) {
             _this.upload();
           } else {
-            //@TODO GA Track event
+            // @TODO GA Track event
             _this.offlineOverlay();
           }
         });
 
-        //GO BACK TO UPLOAD FORM
+        // GO BACK TO UPLOAD FORM
         $('.upload-another-button').on('click', function() {
           // RESET FORM STATUS
-          $('.user_caption').val("");
+          $('.user_caption').val('');
           _this.removeUploadAnimation();
           $('.placeholder-wrapper').removeClass('has-image');
 
@@ -100,9 +100,9 @@ $('[data-photo-sharing-id]').each(function(){
         // Store the name on a PV
         $name.on('change', function() {
           window.photoUserPV.name = $('.user_name').val();
-          Fliplet.Security.Storage.update().then(function () {
+          Fliplet.Security.Storage.update().then(function() {
             // Remove missing messages after the field changed if the message is there
-            if (($(".name-missing").hasClass("show") && $name.val() !== "")) {
+            if (($('.name-missing').hasClass('show') && $name.val() !== '')) {
               _this.hideMissingName();
             }
           });
@@ -112,18 +112,18 @@ $('[data-photo-sharing-id]').each(function(){
         $('.back-feed').add('.cancel-upload-button').on('click', function() {
           _this.refresh();
           _this.overlay.close();
-          $(".photo-feed-parent-holder").animate({ scrollTop: 0 }, 250);
+          $('.photo-feed-parent-holder').animate({ scrollTop: 0 }, 250);
         });
 
         // If we have the missing photo message hide it when we select an image
-        $(".photo-upload").on("thumbCanvasReady", function() {
+        $('.photo-upload').on('thumbCanvasReady', function() {
           _this.hideMissingPhoto();
           $('.placeholder-wrapper').addClass('has-image');
         });
       },
       attachObservers: function() {
         // When click the camera button
-        $(".add-photo").click(function() {
+        $('.add-photo').click(function() {
           // @TODO: GA Track event
           if (Fliplet.Env.get('platform') === 'web') {
             Fliplet.Navigate.popup({
@@ -134,7 +134,7 @@ $('[data-photo-sharing-id]').each(function(){
           }
 
           // Get the template
-          var source = $(".photo_feed_upload").html();
+          var source = $('.photo_feed_upload').html();
           var template = Handlebars.compile(source);
           var html = template();
 
@@ -165,14 +165,14 @@ $('[data-photo-sharing-id]').each(function(){
         // First blink of camera icon
         setTimeout(_this.bPhotoFeed, 5000);
 
-        document.addEventListener("offline", function(){
+        document.addEventListener('offline', function() {
           _this.showOfflineMessage();
           _this.offlineOverlay();
 
           $('.add-photo').removeClass('ready');
         }, false);
 
-        document.addEventListener("online", function(){
+        document.addEventListener('online', function() {
           _this.removeOfflineMessage();
           _this.onlineOverlay();
 
@@ -274,7 +274,7 @@ $('[data-photo-sharing-id]').each(function(){
       },
 
       // @TODO: Refactor upload
-      //Make the upload
+      // Make the upload
       upload: function() {
 
         var fields = {};
@@ -282,8 +282,8 @@ $('[data-photo-sharing-id]').each(function(){
         var formData;
 
         // Get fields
-        var name = $(".user_name").val();
-        var caption = $(".user_caption").val();
+        var name = $('.user_name').val();
+        var caption = $('.user_caption').val();
 
         // Check for errors
         var error = false;
@@ -291,7 +291,7 @@ $('[data-photo-sharing-id]').each(function(){
           _this.showMissingPhoto();
           error = true;
         }
-        if (name === "") {
+        if (name === '') {
           _this.showMissingName();
           error = true;
         }
@@ -304,7 +304,7 @@ $('[data-photo-sharing-id]').each(function(){
         // Show the upload animation
         _this.uploadAnimation();
 
-        $('form.form-horizontal').find('[name]').each(function () {
+        $('form.form-horizontal').find('[name]').each(function() {
           var $el = $(this);
           var name = $el.attr('name');
           var type = $el.attr('type');
@@ -321,7 +321,7 @@ $('[data-photo-sharing-id]').each(function(){
         }
 
         formData = new FormData();
-        Object.keys(fields).forEach(function (fieldName) {
+        Object.keys(fields).forEach(function(fieldName) {
           formData.append(fieldName, fields[fieldName]);
         });
         formData.append('imageURL', imageBase64);
@@ -330,22 +330,21 @@ $('[data-photo-sharing-id]').each(function(){
         formData.append('uploadedAt', moment().format());
         formData = formData || fields;
 
-        _this.getConnection().then(function (connection) {
+        _this.getConnection().then(function(connection) {
           return connection.insert(formData, data.folder);
         }).then(function onSaved() {
           // Hide form
           $('form.form-horizontal').addClass('hidden');
 
           // Replace the canvas for an empty one
-          $(".photo-upload").parent().html("<canvas class='photo-upload'></canvas>");
+          $('.photo-upload').parent().html("<canvas class='photo-upload'></canvas>");
 
           // Delete the image from images
           imageBase64 = null;
 
           // Show success screen
           $('.success-screen').addClass('show zoomIn');
-
-        }, function onError(error) {
+        }, function onError() {
           // @TODO: GA Track event
 
           // Hide form and show fail screen
@@ -359,9 +358,9 @@ $('[data-photo-sharing-id]').each(function(){
 
         if (Fliplet.Navigator.isOnline()) {
 
-          _this.getConnection().then(function (connection) {
+          _this.getConnection().then(function(connection) {
             return connection.find();
-          }).then(function (rows) {
+          }).then(function(rows) {
             rows = rows || [];
 
             _this.removeOfflineMessage();
@@ -369,7 +368,7 @@ $('[data-photo-sharing-id]').each(function(){
             window.feedImages = _this.processImageFeed(rows);
 
             // Clear the feed
-            $(".stream-wrapper").html('');
+            $('.stream-wrapper').html('');
 
             // Render the feed
             window.imagesLoaded = 0;
@@ -402,17 +401,17 @@ $('[data-photo-sharing-id]').each(function(){
             var max_height = 400;
 
             var c_width = $('.image-container').width();
-            $('.image-container').each(function(i){
+            $('.image-container').each(function(i) {
               $(this).css({
                 maxHeight: Math.min( max_height, window.feedImages[i].height ) + 'px',
-                height: c_width * (window.feedImages[i].height/window.feedImages[i].width) + 'px'
+                height: c_width * (window.feedImages[i].height / window.feedImages[i].width) + 'px'
               });
             });
 
             if ($wrapper.height() >= $(document).height()) {
               $('.reach-end').show();
             }
-          }).catch(function (error) {
+          }).catch(function(error) {
             $('.photo-sharing-loading-holder').addClass('loaded');
             $('.photo-sharing-wrapper').addClass('ready');
             _this.hideRefreshAnimation();
@@ -468,7 +467,7 @@ $('[data-photo-sharing-id]').each(function(){
        * It takes all the images and using the imageChunkSize it render the images
        */
       renderImageFeed: function() {
-        var source = $(".photo_feed_image").html();
+        var source = $('.photo_feed_image').html();
         var template = Handlebars.compile(source);
         var imagesSlice = window.feedImages.slice(window.imagesLoaded, window.imagesLoaded + _this.imageChunkSize);
         if (imagesSlice.length) {
@@ -490,15 +489,14 @@ $('[data-photo-sharing-id]').each(function(){
     return PhotoFeed;
   }());
 
-  if(Fliplet.Env.get('platform') === 'web') {
-      initPhotoFeed();
-      $('.photo-feed-parent-holder').parent().on("fliplet_page_reloaded", initPhotoFeed);
+  if (Fliplet.Env.get('platform') === 'web') {
+    initPhotoFeed();
+    $('.photo-feed-parent-holder').parent().on('fliplet_page_reloaded', initPhotoFeed);
   } else {
     Fliplet.Navigator.onReady().then(initPhotoFeed);
   }
 
-  function initPhotoFeed(){
-      new PhotoFeed(data);
+  function initPhotoFeed() {
+    new PhotoFeed(data);
   }
-
 });
